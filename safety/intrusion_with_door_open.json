@@ -4,16 +4,16 @@
       "conditions": {
         "all": [
           {
+            "fact": "device",
+            "path": ".safety.mode",
+            "operator": "equal",
+            "value": "armed"
+          },
+          {
             "fact": "data",
             "path": ".data.open",
             "operator": "equal",
-            "value": "true"
-          },
-          {
-            "fact": "device",
-            "path": ".safety.armed",
-            "operator": "equal",
-            "value": "true"
+            "value": true
           }
         ]
       },
@@ -24,7 +24,7 @@
           "operation": "message",
           "as": "{{device.uuid}}",
           "message": {
-            "devices": "{{device.safety.watchers}}",
+            "devices": ["{{device.owner}}"],
             "data": {
               "key": "INTRUSION",
               "reason": "DOOR_OPENED_IN_ARMED"
