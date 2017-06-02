@@ -1,0 +1,37 @@
+{
+  "if": {
+    "intrusionWithDoorOpen": {
+      "conditions": {
+        "all": [
+          {
+            "fact": "data",
+            "path": ".data.open",
+            "operator": "equal",
+            "value": "true"
+          },
+          {
+            "fact": "device",
+            "path": ".safety.armed",
+            "operator": "equal",
+            "value": "true"
+          }
+        ]
+      },
+      "event": {
+       "retry": true,
+        "type": "meshblu",
+        "params": {
+          "operation": "message",
+          "as": "{{device.uuid}}",
+          "message": {
+            "devices": "{{device.safety.watchers}}",
+            "data": {
+              "key": "INTRUSION",
+              "reason": "DOOR_OPENED_IN_ARMED"
+            }
+          }
+        }
+      }
+    }
+  }
+}
